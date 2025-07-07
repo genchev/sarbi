@@ -12,8 +12,17 @@ function App() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
+    if (!auth) return;
     return onAuthStateChanged(auth, (u) => setUser(u));
   }, []);
+
+  if (!auth) {
+    return (
+      <Box p={2} textAlign="center">
+        Липсва конфигурация за Firebase. Проверете environment променливите.
+      </Box>
+    );
+  }
 
   return (
     <>
