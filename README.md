@@ -2,7 +2,10 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Firebase Setup
+
+- Copy `.env.example` to `.env` and fill in your Firebase project credentials. These environment variables are required for the app to initialize Firebase correctly.
+- Run `npm install` before starting the app with `npm start`.
 
 In the project directory, you can run:
 
