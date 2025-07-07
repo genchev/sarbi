@@ -31,6 +31,8 @@ jobs:
           echo "REACT_APP_FIREBASE_APP_ID=$REACT_APP_FIREBASE_APP_ID" >> .env
           echo "REACT_APP_FIREBASE_DATABASE_URL=$REACT_APP_FIREBASE_DATABASE_URL" >> .env
 
+      - run: pwd && ls -la
+
       - name: Show generated .env (debug)
         run: cat .env
 
