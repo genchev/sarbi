@@ -6,6 +6,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 - Copy `.env.example` to `.env` and fill in your Firebase project credentials. These environment variables are required for the app to initialize Firebase correctly.
 - Run `npm install` before starting the app with `npm start`.
+- If the page stays blank, open the browser console. Missing Firebase variables will be reported as errors.
 
 In the project directory, you can run:
 
