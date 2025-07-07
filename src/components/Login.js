@@ -1,14 +1,21 @@
 import { useState } from "react";
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  signOut,
+  sendEmailVerification,
+  signInWithPopup,
+  GoogleAuthProvider,
+} from "firebase/auth";
 import { auth } from "../firebase";
-import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { Button, TextField, Box, Typography, Paper, Alert } from '@mui/material';
+import { Button, TextField, Box, Typography, Paper, Alert } from "@mui/material";
 
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [info, setInfo] = useState("");
 
 
 const googleLogin = async () => {
@@ -24,7 +31,16 @@ const googleLogin = async () => {
   const login = async (e) => {
     e.preventDefault();
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      setError("");
+      setInfo("");
+      const cred = await signInWithEmailAndPassword(auth, email, password);
+      if (!cred.user.emailVerified) {
+        await sendEmailVerification(cred.user);
+        setError(
+          "Имейлът не е потвърден. Изпратихме нов имейл за потвърждение."
+        );
+        await signOut(auth);
+      }
     } catch (err) {
       setError(err.message);
     }
@@ -32,7 +48,12 @@ const googleLogin = async () => {
 
   const register = async () => {
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      setError("");
+      setInfo("");
+      const cred = await createUserWithEmailAndPassword(auth, email, password);
+      await sendEmailVerification(cred.user);
+      setInfo("Изпратихме имейл за потвърждение.");
+      await signOut(auth);
     } catch (err) {
       setError(err.message);
     }
@@ -66,6 +87,11 @@ return (
           {error && (
             <Alert severity="error" sx={{ mt: 1 }}>
               {error}
+            </Alert>
+          )}
+          {info && (
+            <Alert severity="info" sx={{ mt: 1 }}>
+              {info}
             </Alert>
           )}
           <Button variant="contained" type="submit" fullWidth sx={{ mt: 2 }}>
