@@ -4,9 +4,12 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
 import { useEffect, useState } from "react";
 import Login from "./components/Login";
-import Dashboard from "./Dashboard";
-import LogoutButton from "./components/LogoutButton";
+import Home from "./pages/Home";
+import Stats from "./pages/Stats";
+import Settings from "./pages/Settings";
+import NavBar from "./components/NavBar";
 import { Box } from "@mui/material";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -25,14 +28,15 @@ function App() {
   }
 
   return (
-    <>
-      {user && (
-        <Box position="absolute" top={16} right={16}>
-          <LogoutButton />
-        </Box>
-      )}
-      {user ? <Dashboard /> : <Login />}
-    </>
+    <BrowserRouter>
+      <NavBar user={user} />
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/stats" element={<Stats />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/" element={<Home />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 export default App;
