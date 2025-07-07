@@ -1,6 +1,18 @@
+import React from 'react';
 import { render, screen } from '@testing-library/react';
 
-test('renders login screen by default', () => {
+jest.mock(
+  'react-router-dom',
+  () => ({
+    BrowserRouter: ({ children }) => <div>{children}</div>,
+    Routes: ({ children }) => <div>{children}</div>,
+    Route: ({ element }) => element,
+    Link: ({ children, ...props }) => <a {...props}>{children}</a>,
+  }),
+  { virtual: true }
+);
+
+test('renders home page by default', () => {
   process.env.REACT_APP_FIREBASE_API_KEY = 'test';
   process.env.REACT_APP_FIREBASE_AUTH_DOMAIN = 'test';
   process.env.REACT_APP_FIREBASE_DATABASE_URL = 'test';
@@ -11,5 +23,5 @@ test('renders login screen by default', () => {
 
   const App = require('./App').default;
   render(<App />);
-  expect(screen.getByText(/Вход с Google/i)).toBeInTheDocument();
+  expect(screen.getByText(/Добре дошли/i)).toBeInTheDocument();
 });
