@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { Button, TextField, Box, Typography, Paper, Alert } from '@mui/material';
@@ -25,6 +25,14 @@ const googleLogin = async () => {
     e.preventDefault();
     try {
       await signInWithEmailAndPassword(auth, email, password);
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  const register = async () => {
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
     } catch (err) {
       setError(err.message);
     }
@@ -62,6 +70,14 @@ return (
           )}
           <Button variant="contained" type="submit" fullWidth sx={{ mt: 2 }}>
             Вход
+          </Button>
+          <Button
+            variant="outlined"
+            fullWidth
+            sx={{ mt: 2 }}
+            onClick={register}
+          >
+            Регистрация
           </Button>
         </form>
         <Button
