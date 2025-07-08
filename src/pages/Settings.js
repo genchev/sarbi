@@ -1,13 +1,15 @@
 import { Box, Typography } from '@mui/material';
+import { useLang } from '../LanguageProvider';
 
 export default function Settings() {
+  const { t } = useLang();
   return (
     <Box p={4} textAlign="center">
       <Typography variant="h4" gutterBottom>
-        Настройки
+        {t('settingsTitle')}
       </Typography>
       <Typography variant="body1" color="text.secondary">
-        Тук ще можете да променяте настройките на приложението.
+        {t('settingsInfo')}
       </Typography>
     </Box>
   );

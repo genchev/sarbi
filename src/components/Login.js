@@ -9,6 +9,7 @@ import {
 } from "firebase/auth";
 import { auth } from "../firebase";
 import { Button, TextField, Box, Typography, Paper, Alert } from "@mui/material";
+import { useLang } from "../LanguageProvider";
 
 
 function Login() {
@@ -16,6 +17,8 @@ function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [info, setInfo] = useState("");
+  const [unverified, setUnverified] = useState(false);
+  const { t } = useLang();
 
 
 const googleLogin = async () => {
@@ -33,13 +36,12 @@ const googleLogin = async () => {
     try {
       setError("");
       setInfo("");
+      setUnverified(false);
       const cred = await signInWithEmailAndPassword(auth, email, password);
       if (!cred.user.emailVerified) {
-        await sendEmailVerification(cred.user);
-        setError(
-          "Имейлът не е потвърден. Изпратихме нов имейл за потвърждение."
-        );
+        setUnverified(true);
         await signOut(auth);
+        return;
       }
     } catch (err) {
       setError(err.message);
@@ -52,8 +54,19 @@ const googleLogin = async () => {
       setInfo("");
       const cred = await createUserWithEmailAndPassword(auth, email, password);
       await sendEmailVerification(cred.user);
-      setInfo("Изпратихме имейл за потвърждение.");
+      setInfo(t('verificationSent'));
       await signOut(auth);
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  const resendVerification = async () => {
+    try {
+      const cred = await signInWithEmailAndPassword(auth, email, password);
+      await sendEmailVerification(cred.user);
+      await signOut(auth);
+      setInfo(t('verificationSent'));
     } catch (err) {
       setError(err.message);
     }
@@ -64,20 +77,22 @@ const googleLogin = async () => {
 //        <Button variant="contained" fullWidth style={{ marginTop: 16 }}>Вход</Button>
 
 
-return (
+  return (
     <Box display="flex" justifyContent="center" alignItems="center" height="100vh" bgcolor="#f5f5f5">
-      <Paper elevation={3} style={{ padding: 24, width: 320 }}>
-        <Typography variant="h5" align="center" gutterBottom>Вход</Typography>
+      <Paper elevation={3} sx={{ p: 3, width: '100%', maxWidth: 320 }}>
+        <Typography variant="h5" align="center" gutterBottom>
+          {t('login')}
+        </Typography>
         <form onSubmit={login}>
           <TextField
-            label="Имейл"
+            label={t('email')}
             fullWidth
             margin="normal"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
           <TextField
-            label="Парола"
+            label={t('password')}
             type="password"
             fullWidth
             margin="normal"
@@ -94,8 +109,17 @@ return (
               {info}
             </Alert>
           )}
+          {unverified && (
+            <Alert severity="warning" sx={{ mt: 1 }} action={
+              <Button color="inherit" size="small" onClick={resendVerification}>
+                {t('resendLink')}
+              </Button>
+            }>
+              {t('awaitingActivation')}
+            </Alert>
+          )}
           <Button variant="contained" type="submit" fullWidth sx={{ mt: 2 }}>
-            Вход
+            {t('login')}
           </Button>
           <Button
             variant="outlined"
@@ -103,7 +127,7 @@ return (
             sx={{ mt: 2 }}
             onClick={register}
           >
-            Регистрация
+            {t('register')}
           </Button>
         </form>
         <Button
@@ -112,7 +136,7 @@ return (
           sx={{ mt: 2 }}
           onClick={googleLogin}
         >
-          Вход с Google
+          {t('loginWithGoogle')}
         </Button>
       </Paper>
     </Box>

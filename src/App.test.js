@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import { LanguageProvider } from './LanguageProvider';
 
 jest.mock(
   'react-router-dom',
@@ -21,7 +22,13 @@ test('renders home page by default', () => {
   process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID = 'test';
   process.env.REACT_APP_FIREBASE_APP_ID = 'test';
 
+  window.localStorage.setItem('lang', 'bg');
+
   const App = require('./App').default;
-  render(<App />);
+  render(
+    <LanguageProvider>
+      <App />
+    </LanguageProvider>
+  );
   expect(screen.getByText(/Добре дошли/i)).toBeInTheDocument();
 });

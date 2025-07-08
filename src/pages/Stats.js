@@ -1,13 +1,15 @@
 import { Box, Typography } from '@mui/material';
+import { useLang } from '../LanguageProvider';
 
 export default function Stats() {
+  const { t } = useLang();
   return (
     <Box p={4} textAlign="center">
       <Typography variant="h4" gutterBottom>
-        Статистики
+        {t('statsTitle')}
       </Typography>
       <Typography variant="body1" color="text.secondary">
-        Тук ще визуализираме статистическа информация.
+        {t('statsInfo')}
       </Typography>
     </Box>
   );

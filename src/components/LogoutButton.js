@@ -1,15 +1,17 @@
 import { Button } from '@mui/material';
 import { signOut } from 'firebase/auth';
 import { auth } from '../firebase';
+import { useLang } from '../LanguageProvider';
 
 export default function LogoutButton() {
+  const { t } = useLang();
   const handleLogout = () => {
     signOut(auth);
   };
 
   return (
     <Button variant="outlined" color="error" onClick={handleLogout}>
-      Изход
+      {t('logout')}
     </Button>
   );
 }

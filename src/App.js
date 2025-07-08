@@ -10,9 +10,11 @@ import Settings from "./pages/Settings";
 import NavBar from "./components/NavBar";
 import { Box } from "@mui/material";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useLang } from "./LanguageProvider";
 
 function App() {
   const [user, setUser] = useState(null);
+  const { t } = useLang();
 
   useEffect(() => {
     if (!auth) return;
@@ -22,7 +24,7 @@ function App() {
   if (!auth) {
     return (
       <Box p={2} textAlign="center">
-        Липсва конфигурация за Firebase. Проверете environment променливите.
+        {t('firebaseMissing')}
       </Box>
     );
   }
