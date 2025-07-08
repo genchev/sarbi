@@ -10,7 +10,7 @@ export default function LogoutButton() {
   };
 
   return (
-    <Button variant="outlined" onClick={handleLogout}>
+    <Button variant="outlined" color="inherit" onClick={handleLogout}>
       {t('logout')}
     </Button>
   );
