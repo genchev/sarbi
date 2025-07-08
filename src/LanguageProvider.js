@@ -22,6 +22,9 @@ export const translations = {
     settingsInfo: 'You will be able to change application settings here.',
     firebaseMissing:
       'Firebase configuration missing. Check your environment variables.',
+    signalsTitle: 'Signals',
+    signalsLoading: 'Loading signals...',
+    noSignals: 'No signals available.'
   },
   bg: {
     home: 'Начало',
@@ -44,6 +47,9 @@ export const translations = {
     settingsInfo: 'Тук ще можете да променяте настройките на приложението.',
     firebaseMissing:
       'Липсва конфигурация за Firebase. Проверете environment променливите.',
+    signalsTitle: 'Сигнали',
+    signalsLoading: 'Зареждане на сигнали...',
+    noSignals: 'Няма налични сигнали.'
   },
 };
 

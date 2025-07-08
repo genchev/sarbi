@@ -36,7 +36,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/stats" element={<Stats />} />
         <Route path="/settings" element={<Settings />} />
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home user={user} />} />
       </Routes>
     </BrowserRouter>
   );
