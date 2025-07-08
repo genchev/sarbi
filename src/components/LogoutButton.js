@@ -10,7 +10,7 @@ export default function LogoutButton() {
   };
 
   return (
-    <Button variant="outlined" color="error" onClick={handleLogout}>
+    <Button variant="outlined" onClick={handleLogout}>
       {t('logout')}
     </Button>
   );
