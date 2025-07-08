@@ -30,5 +30,5 @@ test('renders home page by default', () => {
       <App />
     </LanguageProvider>
   );
-  expect(screen.getByText(/Добре дошли/i)).toBeInTheDocument();
+  expect(screen.getAllByText(/Сигнали/i)[0]).toBeInTheDocument();
 });

@@ -1,5 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
 
 const requiredEnv = [
   'REACT_APP_FIREBASE_API_KEY',
@@ -35,3 +36,4 @@ if (!missing.length) {
 }
 
 export const auth = app ? getAuth(app) : null;
+export const db = app ? getFirestore(app) : null;
