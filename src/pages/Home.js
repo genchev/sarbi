@@ -1,13 +1,15 @@
 import { Box, Typography } from '@mui/material';
+import { useLang } from '../LanguageProvider';
 
 export default function Home() {
+  const { t } = useLang();
   return (
     <Box p={4} textAlign="center">
       <Typography variant="h4" gutterBottom>
-        Добре дошли!
+        {t('welcome')}
       </Typography>
       <Typography variant="body1" color="text.secondary">
-        Тук скоро ще има основна информация.
+        {t('mainInfo')}
       </Typography>
     </Box>
   );
