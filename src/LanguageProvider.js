@@ -24,7 +24,8 @@ export const translations = {
       'Firebase configuration missing. Check your environment variables.',
     signalsTitle: 'Signals',
     signalsLoading: 'Loading signals...',
-    noSignals: 'No signals available.'
+    noSignals: 'No signals available.',
+    more: 'More'
   },
   bg: {
     home: 'Начало',
@@ -49,7 +50,8 @@ export const translations = {
       'Липсва конфигурация за Firebase. Проверете environment променливите.',
     signalsTitle: 'Сигнали',
     signalsLoading: 'Зареждане на сигнали...',
-    noSignals: 'Няма налични сигнали.'
+    noSignals: 'Няма налични сигнали.',
+    more: 'Повече'
   },
 };
 

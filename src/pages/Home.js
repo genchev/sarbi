@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useLang } from '../LanguageProvider';
 import { collection, query, orderBy, limit, onSnapshot } from 'firebase/firestore';
@@ -9,6 +9,7 @@ export default function Home({ user }) {
   const { t } = useLang();
   const [signals, setSignals] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [limitCount, setLimitCount] = useState(20);
 
   useEffect(() => {
     if (!db || !user) return;
@@ -16,7 +17,7 @@ export default function Home({ user }) {
     const q = query(
       collection(db, 'signals'),
       orderBy('receivedAt', 'desc'),
-      limit(20)
+      limit(limitCount)
     );
     const unsub = onSnapshot(
       q,
@@ -27,7 +28,9 @@ export default function Home({ user }) {
       () => setLoading(false)
     );
     return unsub;
-  }, []);
+  }, [db, user, limitCount]);
+
+  const loadMore = () => setLimitCount((l) => l + 20);
 
   return (
     <Box p={2}>
@@ -57,6 +60,11 @@ export default function Home({ user }) {
           <SignalCard key={s.id} signal={s} />
         ))}
       </Box>
+      {signals.length >= limitCount && (
+        <Box textAlign="center" mt={2}>
+          <Button onClick={loadMore}>{t('more')}</Button>
+        </Box>
+      )}
     </Box>
   );
 }
